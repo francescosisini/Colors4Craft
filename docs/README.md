@@ -63,4 +63,23 @@ Per domande, suggerimenti o segnalazioni relative alle dispense, contatta il tea
 
 ---
 
-Questo documento sarà aggiornato man mano che verranno aggiunte nuove dispense e materiali. Grazie per il tuo interesse e buon studio!
+# Branding
+
+La cartella `docs/branding` raccoglie tutte le risorse e le linee guida che definiscono l’identità visiva del progetto **Color4Craft**. In particolare, questa sezione comprende:
+
+- **Logo e Iconografia:**  
+  File grafici ufficiali del progetto, disponibili in vari formati (come SVG e PNG), per garantire una rappresentazione coerente e professionale in ogni contesto.
+
+- **Palette di Colori:**  
+  Specifiche dettagliate dei colori primari e secondari, con codici esadecimali e indicazioni per l’uso corretto su supporti digitali e cartacei.
+
+- **Tipografia:**  
+  Linee guida sui font ufficiali e sulle combinazioni tipografiche da utilizzare, al fine di mantenere l’armonia e la riconoscibilità del marchio.
+
+- **Materiali Promozionali:**  
+  Template e modelli per la creazione di banner, brochure, presentazioni e altri strumenti di comunicazione visiva, che aiutano a rafforzare l’immagine del progetto.
+
+Queste risorse sono fondamentali per assicurare una comunicazione coerente e un’identità visiva forte e riconoscibile, sia all’interno che all’esterno del progetto.
+
+Questa sezione si integra con il resto del documento, offrendo una panoramica completa non solo delle dispense tecniche, ma anche degli elementi di branding essenziali per il progetto **Color4Craft**.
+
