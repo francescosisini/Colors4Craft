@@ -1,0 +1,110 @@
+import pygame
+import sys
+import random
+
+# Inizializzazione pygame
+pygame.init()
+
+# Costanti
+LARGHEZZA, ALTEZZA = 800, 600
+COLORI = {"R": (255, 0, 0), "G": (0, 255, 0), "B": (0, 0, 255), "W": (255, 255, 255)}
+FONT = pygame.font.SysFont("arial", 24)
+FPS = 60
+
+# Sequenze
+sequenza_p1 = ["W", "R", "G", "B", "W"]
+sequenza_p2 = ["W", "G", "R", "B", "W"]
+
+# Setup schermo
+schermo = pygame.display.set_mode((LARGHEZZA, ALTEZZA))
+pygame.display.set_caption("Gioco delle Sequenze")
+clock = pygame.time.Clock()
+
+# Stato
+stato_corrente = "W"
+sequenza_azioni = []
+sequenza_colorata = []
+input_giocatori = []
+N = 5
+
+# Transizione di stato
+def transizione(stato, giocatore):
+    if giocatore == 1:
+        indice = sequenza_p1.index(stato)
+        return sequenza_p1[(indice + 1) % len(sequenza_p1)]
+    elif giocatore == 2:
+        indice = sequenza_p2.index(stato)
+        return sequenza_p2[(indice + 1) % len(sequenza_p2)]
+
+# Genera sequenza iniziale
+for _ in range(N):
+    giocatore = random.choice([1, 2])
+    sequenza_azioni.append(giocatore)
+    stato_corrente = transizione(stato_corrente, giocatore)
+    sequenza_colorata.append(stato_corrente)
+
+# Reset
+stato_corrente = "W"
+indice_input = 0
+gioco_terminato = False
+messaggio = ""
+
+# Diagrammi di stato
+def disegna_diagramma(sequenza, x, y):
+    for i, stato in enumerate(sequenza):
+        colore = COLORI[stato]
+        pygame.draw.circle(schermo, colore, (x, y + i * 40), 15)
+        if i < len(sequenza) - 1:
+            pygame.draw.line(schermo, (0, 0, 0), (x, y + i * 40 + 15), (x, y + (i + 1) * 40 - 15), 2)
+
+# Loop principale
+while True:
+    clock.tick(FPS)
+    schermo.fill((30, 30, 30))
+
+    # Eventi
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif evento.type == pygame.MOUSEBUTTONDOWN and not gioco_terminato:
+            x, y = pygame.mouse.get_pos()
+            if x < 200:
+                giocatore = 1
+            elif x > LARGHEZZA - 200:
+                giocatore = 2
+            else:
+                giocatore = None
+
+            if giocatore:
+                input_giocatori.append(giocatore)
+                stato_corrente = transizione(stato_corrente, giocatore)
+
+                if stato_corrente != sequenza_colorata[indice_input]:
+                    gioco_terminato = True
+                    messaggio = "Game Over! Sequenza errata."
+                else:
+                    indice_input += 1
+                    if indice_input == N:
+                        gioco_terminato = True
+                        messaggio = "Bravo! Hai completato la sequenza."
+
+    # Disegna quadrati centrali
+    for i, colore in enumerate(["R", "G", "B", "W"]):
+        pygame.draw.rect(schermo, COLORI[colore], (300 + i * 50, 250, 40, 100))
+
+    # Testi e diagrammi
+    testo_p1 = FONT.render("Giocatore 1", True, (255, 255, 255))
+    testo_p2 = FONT.render("Giocatore 2", True, (255, 255, 255))
+    schermo.blit(testo_p1, (50, 50))
+    schermo.blit(testo_p2, (LARGHEZZA - 200, 50))
+
+    disegna_diagramma(sequenza_p1, 100, 100)
+    disegna_diagramma(sequenza_p2, LARGHEZZA - 100, 100)
+
+    # Messaggio finale
+    if gioco_terminato:
+        txt = FONT.render(messaggio, True, (255, 255, 0))
+        schermo.blit(txt, (LARGHEZZA // 2 - txt.get_width() // 2, 500))
+
+    pygame.display.flip()
